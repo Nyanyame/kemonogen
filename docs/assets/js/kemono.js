@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function() {
 
     var seed = {
         x: (2147483648 * Math.random()) | 0,
@@ -6,21 +6,24 @@ window.onload = function(){
         z: (2147483648 * Math.random()) | 0,
         w: (2147483648 * Math.random()) | 0
     };
+
     function randomInt(xors) {
         var t = xors.x ^ (xors.x << 11);
         xors.x = xors.y;
         xors.y = xors.z;
         xors.z = xors.w;
-        return xors.w = (xors.w^(xors.w>>>19))^(t^(t>>>8));
+        return xors.w = (xors.w ^ (xors.w >>> 19)) ^ (t ^ (t >>> 8));
     }
+
     function random(xors) {
         return randomInt(xors) / 2147483648;
     }
-    function shuffle(xs){
+
+    function shuffle(xs) {
         var v = Object.assign({}, seed);
         var xs = xs.slice();
         var ys = [];
-        while(0 < xs.length){
+        while (0 < xs.length) {
             var i = Math.abs(randomInt(v)) % xs.length;
             ys.push(xs[i]);
             xs.splice(i, 1);
@@ -29,12 +32,12 @@ window.onload = function(){
     }
 
     var colorTuples = shuffle([
-        ["#16ae67", "#90c31f"], 
-        ["#ea5421", "#f39800"], 
-        ["#00ac8e", "#e4007f"], 
-        ["#227fc4", "#00a1e9"], 
-        ["#9fa0a0", "#c9caca"], 
-        ["#e60013", "#f39800"], 
+        ["#16ae67", "#90c31f"],
+        ["#ea5421", "#f39800"],
+        ["#00ac8e", "#e4007f"],
+        ["#227fc4", "#00a1e9"],
+        ["#9fa0a0", "#c9caca"],
+        ["#e60013", "#f39800"],
         ["#c3d600", "#a42e8c"]
     ]);
 
@@ -43,7 +46,7 @@ window.onload = function(){
 
     var topInput = document.querySelector("#top");
     var middleInput = document.querySelector("#middle");
-    var bottomInput = document.querySelector("#bottom"); 
+    var bottomInput = document.querySelector("#bottom");
 
     var top = document.querySelector(".top");
     var middle = document.querySelector(".middle");
@@ -51,7 +54,7 @@ window.onload = function(){
 
     var foreground = document.getElementById("foreground");
     var image = document.getElementById("result");
-    
+
     var container = document.querySelector(".container");
     var download = document.getElementById("download");
 
@@ -60,45 +63,45 @@ window.onload = function(){
 
 
 
-    function update(){
-        setTimeout(function(){
+    function update() {
+        setTimeout(function() {
             setText(topInput.value, middleInput.value, bottomInput.value);
         });
-    }      
+    }
     middleInput.addEventListener("change", update);
-    middleInput.addEventListener("keydown", update);    
+    middleInput.addEventListener("keydown", update);
     topInput.addEventListener("change", update);
-    topInput.addEventListener("keydown", update);  
+    topInput.addEventListener("keydown", update);
     bottomInput.addEventListener("change", update);
-    bottomInput.addEventListener("keydown", update);        
+    bottomInput.addEventListener("keydown", update);
 
-    function setText(topText, middleText, bottomText){
+    function setText(topText, middleText, bottomText) {
 
 
-        
+
 
         var topTextSize = 30;
         var topMiddlePadding = 30;
         var middleTextSize = 120;
-        var middleBottomPadding = 20;        
+        var middleBottomPadding = 20;
         var bottomTextSize = 30;
         var margin = 60;
         var bottomTextLetterSpacing = 20;
 
-        var topTextFont = `normal bold ${topTextSize}px/2 "Yu Mincho"`;
-        var middleTextFont = `normal 400 ${middleTextSize}px/2 japarifont`;
+        var topTextFont = `normal 400 ${topTextSize}px/2 Yeonsung`;
+        var middleTextFont = `normal 400 ${middleTextSize}px/2 Japari`;
         var bottomTextFont = `normal 400 ${bottomTextSize}px/2 PlayBold`;
 
         // resize canvas
         g.font = topTextFont;
         var topMetrics = g.measureText(topText);
         g.font = middleTextFont;
-        var middleMetrics = g.measureText(middleText);  
+        var middleMetrics = g.measureText(middleText);
         g.font = bottomTextFont;
-        var bottomMetrics = g.measureText(bottomText);  
+        var bottomMetrics = g.measureText(bottomText);
         canvas.width = margin + Math.max(
-            topMetrics.width, 
-            middleMetrics.width, 
+            topMetrics.width,
+            middleMetrics.width,
             bottomMetrics.width + bottomTextLetterSpacing * (bottomText.length - 1)
         ) + margin;
         canvas.height = margin + topTextSize + topMiddlePadding + middleTextSize + middleBottomPadding + bottomTextSize + margin;
@@ -110,20 +113,20 @@ window.onload = function(){
 
 
 
-        // stroke top text 
-        function iterate(callback){
+        // stroke top text
+        function iterate(callback) {
             var xors = Object.assign({}, seed);
             g.save();
 
-            g.font = topTextFont;        
+            g.font = topTextFont;
             g.fillStyle = "white";
             g.strokeStyle = "white";
-            g.lineJoin = "round";    
-            g.lineWidth = 10.0;   
+            g.lineJoin = "round";
+            g.lineWidth = 10.0;
             var metrics = g.measureText(topText);
             g.translate(margin + (canvas.width - metrics.width - margin * 2) * 0.5, margin);
             var x = 0;
-            for(var i = 0; i < topText.length; i++){
+            for (var i = 0; i < topText.length; i++) {
                 var c = topText.slice(i, i + 1);
                 var rot = random(xors) * 0.2;
                 var metrics = g.measureText(c);
@@ -139,18 +142,18 @@ window.onload = function(){
         }
         g.save();
         var xors = Object.assign({}, seed);
-        
+
 
 
         var topColors = ["#04ad8f", "#a6ce48", "#f3a118", "#ea6435", "#17b297", "#e30983", "#2782c4", "#1aa6e7", "#b5b5b5", "#f29905", "#e50011", "#ccdc26", "#a5328d", "#0aaa60", "#91c423", "#f29300", "#ec5f69", "#22b69e", "#e63e9b", "#917220"];
 
-  
-        iterate(function(i, c){
+
+        iterate(function(i, c) {
             g.shadowColor = "transparent";
 
-            g.strokeText(c, 0, 0);            
+            g.strokeText(c, 0, 0);
         });
-        iterate(function(i, c){
+        iterate(function(i, c) {
             g.shadowColor = "rgba(0, 0, 0, 0.3)";
             g.shadowBlur = 10;
             g.fillStyle = topColors[i % topColors.length];
@@ -175,11 +178,11 @@ window.onload = function(){
         g.lineCap = "round";
         g.lineJoin = "round";
         g.strokeText(middleText, 0, 0);
-        
+
         // fill charactors
         var x = 0;
         var xors = Object.assign({}, seed);
-        for(var i = 0; i < middleText.length; i++){
+        for (var i = 0; i < middleText.length; i++) {
             var c = middleText.slice(i, i + 1);
 
             // base color
@@ -194,7 +197,7 @@ window.onload = function(){
             var rot = random(xors);
             g.beginPath();
             g.save();
-            g.translate(middleTextSize * 0.5, middleTextSize * 0.5);            
+            g.translate(middleTextSize * 0.5, middleTextSize * 0.5);
             g.rotate(rot);
             g.translate(-middleTextSize * 0.5, -middleTextSize * 0.5);
             g.moveTo(-middleTextSize * 2, middleTextSize * 0.5);
@@ -214,10 +217,10 @@ window.onload = function(){
             g.restore();
 
             // go to next
-            var metrics  = g.measureText(c);
+            var metrics = g.measureText(c);
             g.translate(metrics.width, 0);
         }
-        
+
         g.restore();
 
         // bottom text
@@ -228,15 +231,15 @@ window.onload = function(){
         g.lineCap = "round";
         g.lineJoin = "round";
         g.textBaseline = "top";
-        g.font = bottomTextFont;      
+        g.font = bottomTextFont;
 
         var metrics = g.measureText(bottomText);
         g.translate(
-            (canvas.width - metrics.width - (bottomText.length - 1) * bottomTextLetterSpacing) * 0.5, 
+            (canvas.width - metrics.width - (bottomText.length - 1) * bottomTextLetterSpacing) * 0.5,
             margin + topTextSize + topMiddlePadding + middleTextSize + middleBottomPadding
         );
 
-        for(var i = 0; i < bottomText.length; i++){
+        for (var i = 0; i < bottomText.length; i++) {
             var c = bottomText.slice(i, i + 1);
             g.shadowColor = "rgba(0, 0, 0, 0.3)";
             g.shadowBlur = 10;
@@ -256,15 +259,14 @@ window.onload = function(){
 
     }
 
-    topInput.value = "女の子の姿になった動物たちが繰り広げる大冒険！";
-    middleInput.value = "けものフレンズ";
+    topInput.value = "여자아이 모습을 한 동물들이 펼치는 대모험!";
+    middleInput.value = "케모노프렌즈";
     bottomInput.value = "KEMONO FRIENDS";
     update();
 
-    download.addEventListener("click", function(){
+    download.addEventListener("click", function() {
         canvas.toBlob(function(blob) {
             saveAs(blob, middleInput.value + ".png");
         });
     });
 };
-

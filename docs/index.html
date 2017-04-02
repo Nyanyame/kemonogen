@@ -1,109 +1,146 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="utf8">
-        <title>けものフレンズ ロゴジェネレータ</title>
-        <link rel="stylesheet" href="index.css">
-        <meta name="twitter:card" content="summary" />
-        <meta name="twitter:site" content="@cubbit2" />
-        <meta name="twitter:title" content="けものフレンズ ロゴジェネレータ" />
-        <meta name="twitter:description" content="すごーい！　けものフレンズっぽいロゴを作ることができるサービスなんだね！" />
-        <meta name="twitter:image" content="https://aratama.github.io/kemonogen/card.png" />
-        <meta name="twitter:alt" content="け" />
-        <link rel="icon" href="card.png">
-        <script src="index.js"></script>
-        <script src="canvas-toBlob.js"></script>
-        <script src="FileSaver.js"></script>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>케모노프렌즈 로고 생성기!</title>
+    <link rel="stylesheet" href="/assets/css/normalize.min.css">
+    <link rel="stylesheet" href="/assets/css/kemono.css">
+    <meta name="twitter:card" content="Summary">
+    <meta name="twitter:site" content="SawariNeko">
+    <meta name="twitter:title" content="케모노프렌즈 로고 생성기!">
+    <meta name="twitter:description" content="대단해! 케모노프렌즈의 로고를 원하는 텍스트로 만들 수 있는 친구로구나!">
+    <meta name="twitter:image" content="https://kemono.gatari.net/assets/images/card.png">
+    <meta name="twitter:alt" content="케">
+    <link rel="icon" href="/assets/images/card.png">
+    <script src="/assets/js/kemono.js"></script>
+    <script src="/assets/js/canvas-toBlob.js"></script>
+    <script src="/assets/js/FileSaver.js"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-        <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-96256525-1', 'auto');
+      ga('send', 'pageview');
 
-        ga('create', 'UA-61162129-5', 'auto');
-        ga('send', 'pageview');
-
-        </script>
-    </head>
-
-    <body>
-
-        <div class="container savanna">
-
-            <div class="preview noselect">
-
-                <img id="result" />
-
-                <div class="bottom">
-                    <div class="lower"></div>
-                    <div class="upper"></div>
-                </div>
+    </script>
+    <script type="text/javascript">
+    WebFontConfig = {
+        custom: {
+            families: ['Nanum Gothic'],
+            urls: ['//fonts.googleapis.com/earlyaccess/nanumgothic.css']
+        }
+    };
+    (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+    })();
+    </script>
+</head>
+<body>
+    <div class="container savanna">
+        <div class="preview noselect">
+            <img id="result">
+            <div class="bottom" style="display: none;">
+                <div class="lower"></div>
+                <div class="upper"></div>
             </div>
-            
-            <div class="inputs">
-                <h1>けものフレンズ ロゴジェネレータ！</h1>
-                <span>↓ここに もじを いれてね！</span>
-                <input id="top" type="text" />
-                <input id="middle" type="text" />
-                <input id="bottom" type="text" />
-                <p>もじが　かけたら、　<button id="download" download="kemono-friends-logo.png">ロゴがぞうをダウンロード！</button>ボタンをおして　がぞうを　ほぞんしよう！</p>
-                <p>すまーとふぉんなら　ロゴを長押しして『画像を共有』をするか、スクショでもいいとおもうよ。</p>
-                
-                <p>おもしろかったら
-                <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-related="cubbit2">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script> 
-                もしてね！</p>
-                <div class="snsbuttons">
-
-                    <!-- Hatena -->
-                    <div>
-                        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
-                    </div>
-
-                    <!-- line -->
-                    <div>
-                        <div class="line-it-button" style="display: none;" data-type="share-a" data-lang="ja" ></div>
-                        <script src="//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js" async="async" defer="defer" ></script>
-                    </div>
-
-                    <!--facebook -->
-                    <div>
-                        <div id="fb-root"></div>
-                        <script>(function(d, s, id) {
-                        var js, fjs = d.getElementsByTagName(s)[0];
-                        if (d.getElementById(id)) return;
-                        js = d.createElement(s); js.id = id;
-                        js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.8";
-                        fjs.parentNode.insertBefore(js, fjs);
-                        }(document, 'script', 'facebook-jssdk'));</script>
-                        <div class="fb-like" data-href="https://aratama.github.io/kemonogen/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
-                    </div>
-
-                    <!-- google+ -->
-                    <div>
-                        <script src="https://apis.google.com/js/platform.js" async defer>
-                        {lang: 'ja'}
-                        </script>
-                        <div class="g-plusone" data-size="medium"></div>
-                    </div>
-
-                </div>
-
-
-            </div>
-
-            <footer>
-                <p>
-                    Kemono Friends Logo Generator powered by 
-                    <a target="_blank" href="http://getsuren.com/killgoU.html">キルゴU</a>, 
-                    <a target="_blank" href="https://code.google.com/archive/p/dejima-fonts/">出島明朝</a>,
-                    <a target="_blank" href="https://fonts.google.com/specimen/Play">Play</a>,
-                    <a target="_blank" href="https://flic.kr/p/76RaWE">Savanna</a> and Friends!
-                </p>
-                <p>
-                    Author: <a href="https://twitter.com/cubbit2">@cubbit2</a>
-                </p>
-            </footer>
         </div>
-    </body>
+         <div class="adsense" style="text-align: center;">
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <!-- 케모노프렌즈 -->
+            <ins class="adsbygoogle"
+                 style="display:inline-block;width:728px;height:90px"
+                 data-ad-client="ca-pub-4567656036902568"
+                 data-ad-slot="1764775537"></ins>
+            <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+        <div class="inputs">
+            <h1>케모노프렌즈 로고 생성기! 한글판</h1>
+            <span>글자가 깨지거나 굴림체(또는 고딕으)로 나오면 새로고침 하시거나 밑에 글자를 입력해주세요!</span>
+            <span>↓ 여기에 입력하라구! <a href="https://aratama.github.io/kemonogen/"><strong>일본어판은 이쪽으로</strong></a></span>
+            <input id="top" type="text">
+            <input id="middle" type="text">
+            <input id="bottom" type="text">
+            <p>혹시나 이미지 저장이 안된다면 <button id="download" download="kemono-friends-logo.png">로고를 당장 잡아먹겠다!</button>버튼을 눌러 내려 받을 수 있어!</p>
+            <p>스마트폰이라면 로고를 길게 눌러서 '이미지를 공유'하는 것도 하나의 방법.</p>
+            <p>정말 재밌다구?
+            <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-related="cubbit2">Tweet</a>
+            <script>
+                ! function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0],
+                        p = /^http:/.test(d.location) ? 'http' : 'https';
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = p + '://platform.twitter.com/widgets.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'twitter-wjs');
+            </script>
+            으로 이 곳을 공유해봐!</p>
+            <div class="snsbuttons">
+                <!-- Hatena -->
+                <div>
+                    <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a>
+                    <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js"
+                        charset="utf-8" async="async"></script>
+                </div>
+                <!-- line -->
+                <div>
+                    <div class="line-it-button" style="display: none;" data-type="share-a" data-lang="ko"></div>
+                    <script src="//scdn.line-apps.com/n/line_it/thirdparty/loader.min.js" async="async" defer="defer"></script>
+                </div>
+                <!--facebook -->
+                <div>
+                    <div id="fb-root"></div>
+                    <script>
+                        (function(d, s, id) {
+                            var js, fjs = d.getElementsByTagName(s)[0];
+                            if (d.getElementById(id)) return;
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.8";
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));
+                    </script>
+                    <div class="fb-like" data-href="https://kemono.gatari.net/" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+                </div>
+                <!-- google+ -->
+                <div>
+                    <script src="https://apis.google.com/js/platform.js" async defer>
+                        {
+                            lang: 'ko'
+                        }
+                    </script>
+                    <div class="g-plusone" data-size="medium"></div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+        <footer>
+            <p>
+                구글 크롬 브라우저에 최적화 되었습니다.<br>케모노프렌즈 로고 생성기! 한글판을 위해 도움을 준
+                <a target="_blank" href="http://font.woowahan.com/">우아한형제들</a>,
+                <a target="_blank" href="https://fonts.google.com/specimen/Play">Play</a>,
+                <a target="_blank" href="https://flic.kr/p/76RaWE">Savanna</a> 그리고 친구들!
+            </p>
+            <p>
+                개발자: <a href="https://twitter.com/cubbit2">@cubbit2</a>(<a href="https://github.com/aratama/kemonogen">Github</a>) / 서버 및 한글패치: <a href="https://twitter.com/LaspSawari">@LaspSawari</a>
+            </p>
+        </footer>
+    </div>
+</body>
+
 </html>
